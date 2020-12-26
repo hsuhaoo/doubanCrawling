@@ -19,9 +19,6 @@
 
   <link href="https://img3.doubanio.com/f/book/222a5c61e041638af8defc87cf97f4a863a77922/css/book/base/init.css" rel="stylesheet">
   <style type="text/css"></style>
-  <script src="https://img3.doubanio.com/f/book/0495cb173e298c28593766009c7b0a953246c5b5/js/book/lib/jquery/jquery.js"></script>
-  <script src="https://img3.doubanio.com/f/shire/5ecaf46d6954d5a30bc7d99be86ae34031646e00/js/douban.js"></script>
-  <script src="https://img3.doubanio.com/f/book/0322e3e810e475f1c82adb7d1c6ccfa1c0fa969c/js/book/master.js"></script>
   
 
   
@@ -130,21 +127,6 @@
 
   </div>
 </div>
-<script>
-  ;window._GLOBAL_NAV = {
-    DOUBAN_URL: "https://www.douban.com",
-    N_NEW_NOTIS: 0,
-    N_NEW_DOUMAIL: 0
-  };
-</script>
-
-
-
-    <script src="//img3.doubanio.com/dae/accounts/resources/19870c3/shire/bundle.js" defer="defer"></script>
-
-
-
-
   
 
 
@@ -599,33 +581,6 @@
     <!-- COLLECTED JS -->
     <!-- mako -->
     
-  
-
-
-
-
-    
-<script type="text/javascript">
-    (function (global) {
-        var newNode = global.document.createElement('script'),
-            existingNode = global.document.getElementsByTagName('script')[0],
-            adSource = '//erebor.douban.com/',
-            userId = '',
-            browserId = 'LwDbhk-v9iE',
-            criteria = '3:/tag/?view=type&amp;icn=index-sorttags-all',
-            preview = '',
-            debug = false,
-            adSlots = ['dale_book_tags_top_right', 'dale_book_tag_bottom_banner'];
-
-        global.DoubanAdRequest = {src: adSource, uid: userId, bid: browserId, crtr: criteria, prv: preview, debug: debug};
-        global.DoubanAdSlots = (global.DoubanAdSlots || []).concat(adSlots);
-
-        newNode.setAttribute('type', 'text/javascript');
-        newNode.setAttribute('src', '//img1.doubanio.com/ZGJhYzhmaC9mL2FkanMvOTY0ZDI5MjQ5N2ViOGI2ZGU3ODdkYmI3YTk3NDliMTJlMzNmMGNlYy9hZC5yZWxlYXNlLmpz');
-        newNode.setAttribute('async', true);
-        existingNode.parentNode.insertBefore(newNode, existingNode);
-    })(this);
-</script>
 
 
 
@@ -638,91 +593,6 @@
 
 
     
-  
-
-<script type="text/javascript">
-  var _paq = _paq || [];
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var p=(('https:' == document.location.protocol) ? 'https' : 'http'), u=p+'://fundin.douban.com/';
-    _paq.push(['setTrackerUrl', u+'piwik']);
-    _paq.push(['setSiteId', '100001']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; 
-    g.type='text/javascript';
-    g.defer=true; 
-    g.async=true; 
-    g.src=p+'://s.doubanio.com/dae/fundin/piwik.js';
-    s.parentNode.insertBefore(g,s);
-  })();
-</script>
-
-<script type="text/javascript">
-var setMethodWithNs = function(namespace) {
-  var ns = namespace ? namespace + '.' : ''
-    , fn = function(string) {
-        if(!ns) {return string}
-        return ns + string
-      }
-  return fn
-}
-
-var gaWithNamespace = function(fn, namespace) {
-  var method = setMethodWithNs(namespace)
-  fn.call(this, method)
-}
-
-var _gaq = _gaq || []
-  , accounts = [
-      { id: 'UA-7019765-1', namespace: 'douban' }
-    , { id: 'UA-7019765-16', namespace: '' }
-    ]
-  , gaInit = function(account) {
-      gaWithNamespace(function(method) {
-        gaInitFn.call(this, method, account)
-      }, account.namespace)
-    }
-  , gaInitFn = function(method, account) {
-      _gaq.push([method('_setAccount'), account.id])
-
-      
-  _gaq.push([method('_addOrganic'), 'google', 'q'])
-  _gaq.push([method('_addOrganic'), 'baidu', 'wd'])
-  _gaq.push([method('_addOrganic'), 'soso', 'w'])
-  _gaq.push([method('_addOrganic'), 'youdao', 'q'])
-  _gaq.push([method('_addOrganic'), 'so.360.cn', 'q'])
-  _gaq.push([method('_addOrganic'), 'sogou', 'query'])
-  if (account.namespace) {
-    _gaq.push([method('_addIgnoredOrganic'), '豆瓣'])
-    _gaq.push([method('_addIgnoredOrganic'), 'douban'])
-    _gaq.push([method('_addIgnoredOrganic'), '豆瓣网'])
-    _gaq.push([method('_addIgnoredOrganic'), 'www.douban.com'])
-  }
-
-      if (account.namespace === 'douban') {
-        _gaq.push([method('_setDomainName'), '.douban.com'])
-      }
-
-        _gaq.push([method('_setCustomVar'), 1, 'responsive_view_mode', 'desktop', 3])
-
-        _gaq.push([method('_setCustomVar'), 2, 'login_status', '0', 2]);
-
-      _gaq.push([method('_trackPageview')])
-    }
-
-for(var i = 0, l = accounts.length; i < l; i++) {
-  var account = accounts[i]
-  gaInit(account)
-}
-
-
-;(function() {
-    var ga = document.createElement('script');
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    ga.setAttribute('async', 'true');
-    document.documentElement.firstChild.appendChild(ga);
-})()
-</script>
 
 
 

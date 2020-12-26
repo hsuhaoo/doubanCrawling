@@ -28,30 +28,12 @@
   
     <link href="https://img3.doubanio.com/f/book/4471ade48d89ae0783c90521b6659dc8fda29f55/css/book/express-more.css" rel="stylesheet"/>
 
-  <script> 
-    $(function(){
-        var $win = $(window),
-        t = $('.article h2').offset().top;
-        isShowFixTop();
-        $win.on('scroll', function() {
-            isShowFixTop();
-        });
-        function isShowFixTop() {
-            if ($win.scrollTop() > t) {
-                $('.fixTop').show()
-            }else{
-                $('.fixTop').hide()
-            }
-        }
-    })
- </script>
   <!-- COLLECTED CSS -->
 
   <link rel="shortcut icon" href="https://img3.doubanio.com/favicon.ico" type="image/x-icon">
 </head>
 <body>
   
-    <script>var _body_start = new Date();</script>
     
   
 
@@ -126,13 +108,6 @@
 
   </div>
 </div>
-<script>
-  ;window._GLOBAL_NAV = {
-    DOUBAN_URL: "https://www.douban.com",
-    N_NEW_NOTIS: 0,
-    N_NEW_DOUMAIL: 0
-  };
-</script>
 
 
 
@@ -1234,82 +1209,6 @@
     s.parentNode.insertBefore(g,s);
   })();
 </script>
-
-<script type="text/javascript">
-var setMethodWithNs = function(namespace) {
-  var ns = namespace ? namespace + '.' : ''
-    , fn = function(string) {
-        if(!ns) {return string}
-        return ns + string
-      }
-  return fn
-}
-
-var gaWithNamespace = function(fn, namespace) {
-  var method = setMethodWithNs(namespace)
-  fn.call(this, method)
-}
-
-var _gaq = _gaq || []
-  , accounts = [
-      { id: 'UA-7019765-1', namespace: 'douban' }
-    , { id: 'UA-7019765-16', namespace: '' }
-    ]
-  , gaInit = function(account) {
-      gaWithNamespace(function(method) {
-        gaInitFn.call(this, method, account)
-      }, account.namespace)
-    }
-  , gaInitFn = function(method, account) {
-      _gaq.push([method('_setAccount'), account.id])
-
-      
-  _gaq.push([method('_addOrganic'), 'google', 'q'])
-  _gaq.push([method('_addOrganic'), 'baidu', 'wd'])
-  _gaq.push([method('_addOrganic'), 'soso', 'w'])
-  _gaq.push([method('_addOrganic'), 'youdao', 'q'])
-  _gaq.push([method('_addOrganic'), 'so.360.cn', 'q'])
-  _gaq.push([method('_addOrganic'), 'sogou', 'query'])
-  if (account.namespace) {
-    _gaq.push([method('_addIgnoredOrganic'), '豆瓣'])
-    _gaq.push([method('_addIgnoredOrganic'), 'douban'])
-    _gaq.push([method('_addIgnoredOrganic'), '豆瓣网'])
-    _gaq.push([method('_addIgnoredOrganic'), 'www.douban.com'])
-  }
-
-      if (account.namespace === 'douban') {
-        _gaq.push([method('_setDomainName'), '.douban.com'])
-      }
-
-        _gaq.push([method('_setCustomVar'), 1, 'responsive_view_mode', 'desktop', 3])
-
-        _gaq.push([method('_setCustomVar'), 2, 'login_status', '0', 2]);
-
-      _gaq.push([method('_trackPageview')])
-    }
-
-for(var i = 0, l = accounts.length; i < l; i++) {
-  var account = accounts[i]
-  gaInit(account)
-}
-
-
-;(function() {
-    var ga = document.createElement('script');
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    ga.setAttribute('async', 'true');
-    document.documentElement.firstChild.appendChild(ga);
-})()
-</script>
-
-
-
-
-
-
-
-
-    <!-- dae-web-book--default-766897d6b9-kkwwc-->
 
 </body>
 </html>

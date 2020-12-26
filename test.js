@@ -21,7 +21,7 @@ ul.each((i, elem) => {
         li_list.push({"src":src,
                      "href":href,
                      "title":title,
-                     "abstrct":abstract,
+                     "abstract":abstract,
                      "author":author,
                      "year":year,
                      "publisher":publisher,
@@ -30,6 +30,25 @@ ul.each((i, elem) => {
     ul_list.push(li_list);
 
 });
+
+var slideList = $("ul[class='col slide-list'] li") 
+var slideList_list = [];
+slideList.each((i, elem)=>{
+    var style = $(elem).find(".cover").attr("style");
+    var href =$(elem).find("a").attr("href");
+    var title = $(elem).find("span.title").text();
+    var meta = $(elem).find("span.meta").text();
+    var abstract = $(elem).find("p.abstract").text();
+    slideList_list.push({
+        "style":style,
+        "href":href,
+        "title":title,
+        "meta":meta,
+        "abstract":abstract,
+    })
+});
+
+
 // console.log(ul_list);
 var popularBooks = $("div[class='section popular-books'] li");
 var popularBooks_list = [];
@@ -40,9 +59,11 @@ popularBooks.each((i, elem)=>{
     var rating = $(elem).find("span.average-rating").text();
     var author = $(elem).find("p.author").text();
     var classification = $(elem).find("p.book-list-classification").text();
-    var reviews = $(elem).find("p.reviews").text();
     var reviews_text = $(elem).find("p.reviews a").text();
     var reviews_href = $(elem).find("p.reviews a").attr("href");
+    $(elem).find("p.reviews a").remove();
+    var reviews = $(elem).find("p.reviews").text();
+    var extra = $(elem).find(".extra-info span").length>0;
     popularBooks_list.push({
         "src":src,
         "href":href,
@@ -53,9 +74,16 @@ popularBooks.each((i, elem)=>{
         "reviews":reviews,
         "reviews_text":reviews_text,
         "reviews_href":reviews_href,
+        "extra": extra,
     })
 });
+
+
 // console.log(popularBooks_list);
+
+
+
+
 var marketBooks = $("div[class='section market-books'] ul[class='list-col list-col5'] li");
 var marketBooks_list = [];
 var market_books_header_info = {"title":"刘勃历史三部曲",
@@ -75,6 +103,8 @@ marketBooks.each((i, elem)=>{
         "price":price,
     });
 })
+
+
 // console.log(marketBooks_list);
 var ranking = $("ul[class='list list-ranking'] li");
 var ranking_list = [];
@@ -94,6 +124,8 @@ ranking.each((i, elem)=>{
         "book_href":book_href,
     });
 })
+
+
 // console.log(ranking_list);
 var block5 = $("div.block5 dl");
 var block5_list = [];
@@ -101,12 +133,72 @@ block5.each((i, elem)=>{
     var src = $(elem).find("img").attr("src");
     var title = $(elem).find("dd a").text();
     var href = $(elem).find("dt a").attr("href");
+    var extra = $(elem).find(".extra-info span").length>0;
     block5_list.push({
         "src":src,
         "href":href,
         "title":title,
+        "extra": extra,
     });
 });
+var jsonstr = JSON.stringify(block5_list);
+
+//将修改后的内容写入文件
+fs.writeFile('./book250.json', jsonstr, function(err) {
+    if (err) {
+       console.error(err);
+    }else{
+        console.log('write success');
+    }
+     
+ });
+
+var eBooks = $("div[class='section ebook-area'] ul[class='list-col list-col5'] li");
+var eBooks_list = [];
+
+eBooks.each((i, elem)=>{
+    var href = $(elem).find("div.cover a").attr("href");
+    var src =$(elem).find("div.cover a img").attr("src");
+    var title = $(elem).find("div.title a").text();
+    var price =$(elem).find("div.price").text();
+    var year = $(elem).find("span.year").text();
+    var publisher = $(elem).find("span.publisher").text();
+    eBooks_list.push({
+        "src":src,
+        "href":href,
+        "title":title,
+        "price":price,
+        "year":year,
+        "publisher":publisher,
+    });
+})
+// console.log(eBooks_list);
+var reviews = $("#reviews .review");
+var reviews_list = [];
+
+reviews.each((i, elem)=>{
+    var href = $(elem).find(".review-hd a").attr("href");
+    var src =$(elem).find(".review-hd img").attr("src");
+    var title = $(elem).find("h3 a").text();
+    var author =$($(elem).find(".review-meta a")[0]).text();
+    var author_href =$($(elem).find(".review-meta a")[0]).attr("href");
+    var book =$($(elem).find(".review-meta a")[1]).text();
+    var content = $(elem).find(".review-content").text();
+    var star = $(elem).find(".review-meta span").attr("class");
+    
+    reviews_list.push({
+        "src":src,
+        "href":href,
+        "title":title,
+        "author":author,
+        "author_href":author_href,
+        "book":book,
+        "content":content,
+        "star": star,
+    });
+})
+// console.log(reviews_list);
+
 // console.log(block5_list);
 var hotTag = $("ul.hot-tags-col5 li ul")
 var li_list =[];
@@ -123,7 +215,7 @@ hotTag.each((i, elem) => {
         "tag_list":tag_list,
     });
 });
-console.log(li_list);
+// console.log(li_list);
 
 var latestHtml = fs.readFileSync("latestbook.html");
 var $ = cheerio.load(latestHtml);
