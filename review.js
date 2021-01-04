@@ -52,47 +52,62 @@ var crawing = async function(dataList) {
     return 1;
 }
 // crawing(href_list);
-var myHtml = fs.readFileSync("./review/12928567.html");
-var $ = cheerio.load(myHtml);
-let star = $("span.main-title-hide").text();
-let author = $($(".info-item-val")[0]).text();
-let publish = $($(".info-item-val")[1]).text();
-let page = $($(".info-item-val")[2]).text();
-let time = $($(".info-item-val")[3]).text();
-let src = $(".subject-img img").attr("src");
-let dataAuthor = $(".review-content").attr("data-author");
-let dataTitle = $("h1 span").text();
-let title = $(".subject-title a").text();
-let date = $(".main-meta").text();
-let p = $(".review-content p");
-let text = '';
-console.log(p);
-p.each((i, elem) => {
-    text += $(elem).text()+"\n";
-});
+let files = fs.readdirSync("./review/");
+for(const file of files){
+    var myHtml = fs.readFileSync("./review/"+file);
+    var $ = cheerio.load(myHtml);
+    let star = $("span.main-title-hide").text();
+    let val = $(".info-item-val");
+    let key = $(".info-item-key");
+    let info = [];
+    val.each((i,elem)=>{
+        info.push($(elem).text());
+    });
+    let infoKey = [];
+    key.each((i,elem)=>{
+        infoKey.push($(elem).text());
+    });
+    let author = $($(".info-item-val")[0]).text();
+    let publish = $($(".info-item-val")[1]).text();
+    let price = $($(".info-item-val")[2]).text();
+    let page = $($(".info-item-val")[2]).text();
+    let time = $($(".info-item-val")[3]).text();
+    let src = $(".subject-img img").attr("src");
+    let dataAuthor = $(".review-content").attr("data-author");
+    let dataTitle = $("h1 span").text();
+    let title = $(".subject-img img").attr("title");
+    let href = $(".subject-title a").attr("href");
+    let date = $(".main-meta").text();
+    let p = $(".review-content p");
+    let text = '';
+    p.each((i, elem) => {
+        text += $(elem).text()+"\n";
+    });
 
-jsonObject = {
-    "src":src,
-    "title":title,
-    "author":author,
-    "publish":publish,
-    "page":page,
-    "star":star,
-    "time":time,
-    "dataAuthor":dataAuthor,
-    "dataTitle":dataTitle,
-    "intro":intro,
-    "date":date,
-    "src":src,
-    "text":text,
-}
-var jsonstr = JSON.stringify(jsonObject);
-
-fs.writeFile('./review_all.json', jsonstr, function(err) {
-    if (err) {
-       console.error(err);
-    }else{
-        console.log('write success');
+    jsonObject = {
+        "src":src,
+        "title":title,
+        "star":star,
+        "info":info,
+        "key":infoKey,
+        "dataAuthor":dataAuthor,
+        "dataTitle":dataTitle,
+        "date":date,
+        "src":src,
+        "text":text,
+        "href":href,
     }
-     
- });
+    // console.log(jsonObject);
+
+    var jsonstr = JSON.stringify(jsonObject);
+    let name = file.split(".")[0];
+    console.log(name); 
+    fs.writeFile('./review_json/'+name+'.json', jsonstr, function(err) {
+        if (err) {
+        console.error(err);
+        }else{
+            console.log('write success');
+        }
+        
+    });
+}
