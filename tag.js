@@ -1,5 +1,6 @@
 var fs = require('fs');
 var cheerio = require('cheerio');
+const writeFile = require("./write_file.js")
 
 var parse=function(file){
     var myHtml = fs.readFileSync("./tag/"+file);
@@ -32,17 +33,7 @@ var parse=function(file){
             "buyhref":buyhref,
         })
     });
-    var jsonstr = JSON.stringify(tags_list);
-
-    //将修改后的内容写入文件
-    fs.writeFile('./tag_json/'+file.slice(0,-4)+".json", jsonstr, function(err) {
-        if (err) {
-        console.error(err);
-        }else{
-            console.log('write success');
-        }
-        
-    });
+    writeFile.writeFile('./tag_json/'+file.slice(0,-4)+".json", tags_list);
 }
 // console.log(tags_list);
 fs.readdir("./tag/",function(err, files){

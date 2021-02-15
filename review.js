@@ -1,57 +1,7 @@
-const fs = require('fs');
-const cheerio = require('cheerio');
-const axios = require('axios');
+const fs = require("fs");
+let files = fs.readdirSync("./review");
+const writeFile = require("./write_file.js");
 
-var myHtml = fs.readFileSync("豆瓣最受欢迎的书评.html");
-var $ = cheerio.load(myHtml);
-var a = $(".main-bd h2 a");
-var href_list =[];
-// a.each((i, elem) => {
-//     var href = $(elem).attr("href");
-//     href_list.push(href);
-// });
-let info = require('./bookInfo.json');
-let review = require('./review.json');
-info.forEach(element => {
-    href_list.push(element.href);
-});
-review.forEach(element => {
-    href_list.push(element.href);
-});
-// console.log(href_list);
-
-var crawingAfterseconds= function(data) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            var name = data.split('/').slice(-2,-1);
-            console.log(name);
-            resolve(axios
-                .get(data)
-                .then(response => {
-                    const html = response.data;
-                    fs.writeFile('./review/'+name+'.html', html, function(err) {
-                        if (err) {
-                           console.error(err);
-                        }else{
-                            console.log('write success');
-                        }
-                         
-                     });
-                    }
-                )
-                .catch(function (error) { // 请求失败处理
-                    console.log(error);
-                }))
-        }, 1000);
-    } )
-}
-var crawing = async function(dataList) {
-    for(const data of dataList){
-        await crawingAfterseconds(data);
-    }
-    return 1;
-}
-// crawing(href_list);
 let files = fs.readdirSync("./review/");
 for(const file of files){
     var myHtml = fs.readFileSync("./review/"+file);
@@ -84,6 +34,8 @@ for(const file of files){
         text += $(elem).text()+"\n";
     });
 
+    let name = file.split(".")[0];
+
     jsonObject = {
         "src":src,
         "title":title,
@@ -96,18 +48,21 @@ for(const file of files){
         "src":src,
         "text":text,
         "href":href,
+        "id": name,
     }
     // console.log(jsonObject);
-
-    var jsonstr = JSON.stringify(jsonObject);
-    let name = file.split(".")[0];
     console.log(name); 
-    fs.writeFile('./review_json/'+name+'.json', jsonstr, function(err) {
-        if (err) {
-        console.error(err);
-        }else{
-            console.log('write success');
-        }
-        
-    });
+
+    writeFile.writeFile('./review_json/'+name+'.json',jsonObject);
 }
+
+
+let jsonList = [];
+files.forEach((elem)=>{
+    let json = require("./review/"+elem);
+    json.id = elem.split(".")[0];
+    json.text = json.text.slice(0,128)+"...";
+    jsonList.push(json);
+});
+console.log(jsonList.slice(0,4));
+writeFile.writeFile("review.json",jsonList.slice(0,4));

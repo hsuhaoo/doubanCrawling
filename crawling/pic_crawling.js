@@ -2,18 +2,12 @@ const request = require('request');
 const axios = require('axios');
 let fs=require("fs");
 
-var doubleAfter2seconds= function(data) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(getAxios(data));
-        }, 5000);
-    } )
-}
-function getAxios(data){
-    var name = data.src.split('/').slice(-1);
+
+var getAxios = function(data){
+    var name = data.split('/').slice(-1);
     let writer = fs.createWriteStream('./picture/'+name);
     return axios
-    .get(data.src,{
+    .get(data,{
         responseType: 'stream'
         })
     .then(response => {
@@ -25,9 +19,16 @@ function getAxios(data){
     });
 }
 
-var testResult = async function(dataList) {
+var crawlingAfterseconds= function(data) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(getAxios(data));
+        }, 5000);
+    } )
+}
+var picResult = async function(dataList) {
     for(const data of dataList){
-        await doubleAfter2seconds(data);
+        await crawlingAfterseconds(data);
     }
 }
 
@@ -49,24 +50,58 @@ var testResult = async function(dataList) {
 // });
 
 
+// var getSrc = function() {
+//     let srcList = []; 
+//     let files = fs.readdirSync("./json/");
+//     for(let i=0; i<files.length;i++) {
+//         let dataList = require("./json/"+files[i]);
+//         for(const data of dataList){
+//             if (data.src !== undefined){ 
+//                 uri = data.src.match(/https:.*(webp|jpg)/i)[0];
+//                 console.log(uri);
+//             }
+//             else{
+//                 uri = data.style.match(/https:.*(webp|jpg)/i)[0];
+//             }
+//             srcList.push(uri);
+//         }
+//     };
+//     // console.log(srcList);
+// }  
+
 var getSrc = function() {
     let srcList = []; 
-    let files = fs.readdirSync("./json/");
+    let files = fs.readdirSync("../review_json/");
     for(let i=0; i<files.length;i++) {
-        let dataList = require("./json/"+files[i]);
-        for(const data of dataList){
-            if (data.src !== undefined){ 
-                uri = data.src.match(/https:.*(webp|jpg)/i)[0];
-                console.log(uri);
-            }
-            else{
-                uri = data.style.match(/https:.*(webp|jpg)/i)[0];
-            }
-            srcList.push(uri);
+        let data = require("../review_json/"+files[i]);
+        if (data.src !== undefined){ 
+            uri = data.src.match(/https:.*(webp|jpg)/i)[0];
+            console.log(uri);
         }
+        else{
+            uri = data.style.match(/https:.*(webp|jpg)/i)[0];
+        }
+        srcList.push(uri);
     };
+    return srcList;
     // console.log(srcList);
 }  
+
+var pageCraw = function() { 
+    let srcList = [];
+    let files = fs.readdirSync("../page/json/");
+    for(let i=0; i<files.length;i++) {
+        let dataList = require("../page/json/"+files[i]);
+        for(const data of dataList){
+            srcList.push({uri:data.src,filename:data.src.split('/').slice(-1)});
+            // srcList.push({uri:data.src,filename:data.src.match(/[0-9]+.jpg/i).slice(-1)});
+        }
+    };
+    console.log(srcList);
+    return srcList;
+}  
+
+
 var jsonCraw = function() { 
     let srcList = [];
     let files = fs.readdirSync("./json/");
@@ -109,5 +144,4 @@ var newBookCraw = function() {
     console.log(srcList);
 }  
 
-getSrc();
-// c.queue(srcList);
+picResult(getSrc());

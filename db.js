@@ -12,7 +12,7 @@ function insertTag() {
                 var dbo = db.db("tag");
                 let dataList = require("./tag_json/" + file);
                 let tag = file.slice(0, -5);
-                console.log(tag);
+                // console.log(tag);
                 dbo.collection(tag).insertMany(dataList, function (err, res) {
                     if (err) throw err;
                     console.log("插入的文档数量为: " + res.insertedCount);
@@ -36,8 +36,8 @@ function insertList(id) {
         });
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db("id");
-            dbo.collection("id").insertMany(dataList, function (err, res) {
+            var dbo = db.db(id);
+            dbo.collection(id).insertMany(dataList, function (err, res) {
                 if (err) throw err;
                 console.log("插入的文档数量为: " + res.insertedCount);
                 db.close();
@@ -45,7 +45,7 @@ function insertList(id) {
         });
     });
 }
-function findTest() {
+function findSearch() {
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("subject");
@@ -64,8 +64,8 @@ function findTest() {
             });
     });
 }
-function insertIndex() {
-    const fileDir = "./indexData/";
+function insertIndex(index) {
+    const fileDir = "./"+index+"/";
     fs.readdir(fileDir, function (err, files) {
         if (err) {
             return console.error(err);
@@ -74,7 +74,7 @@ function insertIndex() {
             let data = require(fileDir + file);
             MongoClient.connect(url, function (err, db) {
                 if (err) throw err;
-                let dbo = db.db("indexData");
+                let dbo = db.db(index);
                 let col = file.slice(0, -5);
                 if (data instanceof Array) {
                     dbo.collection(col).insertMany(data, function (err, res) {
@@ -97,4 +97,22 @@ function insertIndex() {
     });
 }
 
-insertList("review");
+function deletedb(id) {
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("comment");
+        // console.log(tag);
+        dbo.collection("comment").deleteMany({}, function (err, res) {
+            if (err) throw err;
+            db.close();
+        });
+      });
+}
+// insertList("review");
+insertList("subject");
+// insertTag();
+// insertIndex("indexData");
+// insertIndex("page");
+// findSearch();
+// deletedb();
+

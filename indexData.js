@@ -1,19 +1,11 @@
 var fs = require('fs');
 var cheerio = require('cheerio');
+const writeFile = require("./write_file.js").writeFile;
 
 var myHtml = fs.readFileSync("douban.html");
 var $ = cheerio.load(myHtml);
 
-function writeFile(fileName, data){
-    var jsonstr = JSON.stringify(data);
-    fs.writeFile(fileName, jsonstr, function(err) {
-        if (err) {
-        console.error(err);
-        }else{
-            console.log('write success');
-        }
-    });
-}
+
 function newBook(){
     var ul = $("ul[class='list-col list-col5 list-express slide-item']");
     var ulList =[];
@@ -222,85 +214,3 @@ newBook();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var latestHtml = fs.readFileSync("latestbook.html");
-// var $ = cheerio.load(latestHtml);
-// var latest_unreal = $("ul[class='cover-col-4 clearfix'] li");
-// var latest_unreal_list = [];
-// latest_unreal.each((i, elem)=>{
-//     var href = $(elem).find("h2 a").attr("href");
-//     var src = $(elem).find("img").attr("src");
-//     var title = $(elem).find("h2 a").text();
-//     var rating = $(elem).find("span[class='font-small  color-lightgray']").text();
-//     var author = $(elem).find("p.color-gray").text();
-//     var detail = $(elem).find("p.detail").text();
-//     latest_unreal_list.push({
-//         "href":href,
-//         "src":src,
-//         "title":title,
-//         "rating":rating,
-//         "author":author,
-//         "detail":detail,
-//     });
-// });
-// // console.log(latest_unreal_list);
-// var latest_real = $("ul[class='cover-col-4 pl20 clearfix'] li");
-// var latest_real_list = [];
-// latest_real.each((i, elem)=>{
-//     var href = $(elem).find("h2 a").attr("href");
-//     var src = $(elem).find("img").attr("src");
-//     var title = $(elem).find("h2 a").text();
-//     var rating = $(elem).find("span[class='font-small  color-lightgray']").text();
-//     var author = $(elem).find("p.color-gray").text();
-//     var detail = $(elem).find("p.color-gray").nextAll("p").text();
-//     latest_real_list.push({
-//         "href":href,
-//         "src":src,
-//         "title":title,
-//         "rating":rating,
-//         "author":author,
-//         "detail":detail,
-//     });
-// });
-// // console.log(latest_real_list);
-
-// var latestHtml = fs.readFileSync("tag.html");
-// var $ = cheerio.load(latestHtml);
-// var item = $("ul.subject-list li");
-// var item_list = [];
-// item.each((i, elem)=>{
-//     var href = $(elem).find("a.nbg").attr("href");
-//     var title = $(elem).find("div.info a").attr("title");
-//     var src = $(elem).find("img").attr("src");
-//     var pub = $(elem).find("img").text();
-//     var rating = $(elem).find("span.rating_nums").text();
-//     var pl = $(elem).find("span.pl").text();
-//     var detail = $(elem).find("div[class='star clearfix']").nextAll("p").text();
-//     var market = $(elem).find("span.market-info a").attr("href");
-//     item_list.push({
-//         "href":href,
-//         "src":src,
-//         "title":title,
-//         "rating":rating,
-//         "pl":pl,
-//         "pub":pub,
-//         "detail":detail,
-//         "market":market,
-//     });
-// });
-// console.log(item_list);

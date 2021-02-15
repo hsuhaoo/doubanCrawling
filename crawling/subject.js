@@ -1,8 +1,7 @@
 const fs = require("fs");
 const cheerio = require("cheerio");
-const writeFile = require("./write_file.js");
 
-const files = fs.readdirSync("./subject/");
+let files = fs.readdirSync("./subject/");
 
 for(const file of files){
     var myHtml = fs.readFileSync("./subject/"+file);
@@ -67,7 +66,6 @@ for(const file of files){
         "intro":intro,
         "authorIntro":authorIntro,
         "dir":dir,
-        "id": file.split(".").slice(-2)[0],
     }
     
     for(let infoElem of info){
@@ -75,6 +73,14 @@ for(const file of files){
         let val = infoElem.split(":")[1];
         jsonObject[key] = val;
     }
+    var jsonstr = JSON.stringify(jsonObject);
     let name = file.split(".")[0];
-    writeFile.writeFile('./subject_json/'+name+'.json',jsonObject);
+    fs.writeFile('./subject_json/'+name+'.json', jsonstr, function(err) {
+        if (err) {
+        console.error(err);
+        }else{
+            console.log('write success');
+        }
+        
+    });
 }
